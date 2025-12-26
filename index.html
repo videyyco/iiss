@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Selamat Menonton Sayang🥰</title>
+
+<style>
+body{
+  margin:0;
+  min-height:100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:#000;
+  font-family:Arial, sans-serif;
+}
+.container{
+  position:relative;
+  width:100%;
+  max-width:720px;
+}
+video{
+  width:100%;
+  border-radius:10px;
+}
+
+/* overlay rules */
+#ruleOverlay{
+  position:absolute;
+  inset:0;
+  background:rgba(0,0,0,.85);
+  color:#fff;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  border-radius:10px;
+  padding:20px;
+}
+.ruleBox{
+  max-width:320px;
+}
+.ruleBox h2{
+  margin:0 0 10px;
+}
+.ruleBox p{
+  font-size:14px;
+  opacity:.9;
+}
+#ruleBtn{
+  margin-top:15px;
+  padding:14px 22px;
+  font-size:16px;
+  border:none;
+  border-radius:8px;
+  background:#ff5722;
+  color:#fff;
+  cursor:pointer;
+}
+#ruleBtn:active{
+  transform:scale(.97);
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+  <video id="vid" playsinline preload="metadata" controls>
+    <source src="https://cdn.videy.co/pnFlSdvt1.mp4" type="video/mp4">
+  </video>
+
+  <!-- RULES OVERLAY -->
+  <div id="ruleOverlay">
+    <div class="ruleBox">
+      <h2>⚠️ PERATURAN</h2>
+      <p>
+        Untuk melanjutkan menonton video,<br>
+        Anda <b>WAJIB</b> klik tombol di bawah ini.
+      </p>
+      <button id="ruleBtn">LANJUTKAN ▶</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const video = document.getElementById("vid");
+const ruleOverlay = document.getElementById("ruleOverlay");
+const ruleBtn = document.getElementById("ruleBtn");
+
+const adUrl = "https://s.shopee.co.id/5L4wuJqb2U";
+const KEY = "ads_clicked_once";
+
+// kalau sudah pernah klik → langsung bisa nonton
+if (localStorage.getItem(KEY)) {
+  ruleOverlay.style.display = "none";
+}
+
+// blok play sebelum klik
+video.addEventListener("play", () => {
+  if (!localStorage.getItem(KEY)) {
+    video.pause();
+    ruleOverlay.style.display = "flex";
+  }
+});
+
+// klik rules → buka iklan + unlock video
+ruleBtn.addEventListener("click", () => {
+  localStorage.setItem(KEY, "yes");
+  window.open(adUrl, "_blank");
+  ruleOverlay.style.display = "none";
+  video.play();
+});
+</script>
+
+</body>
+</html>
